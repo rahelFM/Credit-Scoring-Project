@@ -1,0 +1,10 @@
+pandas
+numpy
+matplotlib
+seaborn
+pickle-mixin  # for pickle support in some environments
+imbalanced-learn
+mlflow
+scikit-learn
+pytest
+joblib
