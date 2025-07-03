@@ -1,0 +1,10 @@
+artifact_location: file:///c:/Users/Rahel/Desktop/KAIM5/Week%205/mlruns/804839179445841939/models/m-1e2ce82aad65401c98a2ca0537de932d/artifacts
+creation_timestamp: 1751518890354
+experiment_id: '804839179445841939'
+last_updated_timestamp: 1751518898976
+model_id: m-1e2ce82aad65401c98a2ca0537de932d
+model_type: null
+name: random_forest
+source_run_id: 436efd4489944885aada54d623b39450
+status: 2
+status_message: null

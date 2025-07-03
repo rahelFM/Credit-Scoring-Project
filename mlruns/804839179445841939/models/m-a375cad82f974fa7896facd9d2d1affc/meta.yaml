@@ -1,0 +1,10 @@
+artifact_location: file:///c:/Users/Rahel/Desktop/KAIM5/Week%205/mlruns/804839179445841939/models/m-a375cad82f974fa7896facd9d2d1affc/artifacts
+creation_timestamp: 1751518796705
+experiment_id: '804839179445841939'
+last_updated_timestamp: 1751518807919
+model_id: m-a375cad82f974fa7896facd9d2d1affc
+model_type: null
+name: logistic_regression
+source_run_id: 133b9660c0a14d4f89ea393a54452477
+status: 2
+status_message: null

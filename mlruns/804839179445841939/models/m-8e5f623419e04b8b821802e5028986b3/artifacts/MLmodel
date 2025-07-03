@@ -1,0 +1,22 @@
+artifact_path: file:///c:/Users/Rahel/Desktop/KAIM5/Week%205/mlruns/804839179445841939/models/m-8e5f623419e04b8b821802e5028986b3/artifacts
+flavors:
+  python_function:
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.sklearn
+    model_path: model.pkl
+    predict_fn: predict
+    python_version: 3.13.1
+  sklearn:
+    code: null
+    pickled_model: model.pkl
+    serialization_format: cloudpickle
+    sklearn_version: 1.6.1
+mlflow_version: 3.1.1
+model_id: m-8e5f623419e04b8b821802e5028986b3
+model_size_bytes: 2524
+model_uuid: m-8e5f623419e04b8b821802e5028986b3
+prompts: null
+run_id: 6f423de5cfdc42da8b6729fca5aa8bc9
+utc_time_created: '2025-07-03 04:49:32.141525'

@@ -1,0 +1,14 @@
+artifact_uri: file:///c:/Users/Rahel/Desktop/KAIM5/Week%205/mlruns/804839179445841939/41373131072b41c5892e0c34061206e5/artifacts
+end_time: 1751518401576
+entry_point_name: ''
+experiment_id: '804839179445841939'
+lifecycle_stage: active
+run_id: 41373131072b41c5892e0c34061206e5
+run_name: random_forest
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1751518317737
+status: 3
+tags: []
+user_id: Rahel
