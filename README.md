@@ -1,55 +1,99 @@
-# Credit Scoring Business Understanding
+## Credit Scoring Project
+This project develops a credit risk prediction model for customer buy-now-pay-later services. It covers the full ML lifecycle, including data processing, model training with hyperparameter tuning, evaluation, and deployment as a REST API using FastAPI with Docker containerization and CI/CD pipeline setup.
+1. Data Preparation
+•	Loaded and cleaned the customer data.
+•	Engineered features relevant for credit risk prediction.
+•	Split data into training and testing sets.
+2. Model Training and Hyperparameter Tuning
+•	Trained multiple models (Logistic Regression, Random Forest) using Grid Search CV.
+•	Tuned hyperparameters to improve performance.
+•	Evaluated models with metrics: Accuracy, Precision, Recall, F1-score, ROC-AUC.
+•	Logged models and metrics using MLflow.
+3. Model Selection
+•	Compared model performance and selected the best-performing model based on F1-score and ROC-AUC.
+•	Saved the best model as a .pkl file.
+4. API Development
+•	Developed a REST API using FastAPI.
+•	Created /predict endpoint to accept customer feature inputs and return risk probability.
+•	Validated inputs and outputs with Pydantic models.
+•	Loaded the saved model within the API for inference.
+5. Containerization
+•	Created a Dockerfile to containerize the FastAPI service.
+•	Built a Docker image and ran the API inside a Docker container exposing port 8000.
+6. Continuous Integration (CI)
+•	Configured GitHub Actions workflow for:
+o	Running code linter (flake8) to maintain code style.
+o	Running unit tests with pytest.
+•	Ensured the build pipeline fails if linting or tests fail.
+ The detailed methods applied are: 
+1. **Proxy Target Variable Engineering**  
+   - Created a proxy target variable `is_high_risk` by clustering customers based on RFM (Recency, Frequency, Monetary) features.
+   - Labeled customers as high risk or low risk based on clustering results.
 
-## 1. Basel II Accord's Influence on Model Requirements
+2. **Feature Engineering**  
+   - Processed raw customer transaction data.
+   - Created and transformed features suitable for model training.
 
-The Basel II Capital Accord's emphasis on rigorous risk measurement directly impacts our modeling approach in three key ways:
+3. **Model Training and Evaluation**  
+   - Trained multiple machine learning models (logistic regression and others).
+   - Tuned hyperparameters to optimize performance.
+   - Evaluated models using relevant metrics and selected the best model.
 
-1. **Regulatory Compliance**: The Accord's Pillar 1 requires banks to maintain capital reserves proportional to their risk exposure. This necessitates models whose calculations can be clearly traced and validated by regulators.
+4. **Model Serialization**  
+   - Saved the final trained logistic regression model as a pickle file for deployment.
 
-2. **Supervisory Review (Pillar 2)**: Banking authorities must approve internal models, requiring complete documentation of:
-   - Variable selection rationale
-   - Model development methodology
-   - Validation procedures
-   - Performance tracking mechanisms
+5. **API Development**  
+   - Developed a FastAPI application exposing a `/predict` endpoint.
+   - The API accepts a customer ID and returns the predicted credit risk probability.
 
-3. **Market Discipline (Pillar 3)**: Public disclosure requirements mean models must produce outputs that are both statistically sound and explainable to non-technical stakeholders.
+6. **Dockerization**  
+   - Created a Dockerfile to containerize the API.
+   - Configured volume mounts for the model and data files.
+   - Successfully built and ran the API Docker container locally.
 
-These requirements make interpretability and documentation non-negotiable, as regulators must be able to audit and understand every modeling decision.
+7. **CI/CD Setup with GitHub Actions**  
+   - Created a GitHub Actions workflow that runs on every push to the main branch.
+   - The workflow runs `flake8` for code linting.
+   - Executes `pytest` for unit testing.
+   - Ensures code quality and prevents broken builds.
 
-## 2. Proxy Variable Necessity and Risks
+---
 
-**Why a proxy is essential:**
-- The eCommerce dataset lacks traditional credit performance data
-- Behavioral patterns (RFM metrics) serve as the best available indicators
-- Without a proxy, we cannot train a supervised learning model
-- Basel II permits alternative data approaches when properly validated
+## How to Use
 
-**Potential business risks:**
-1. **Misalignment Risk**: Purchase behavior may not perfectly correlate with repayment capacity
-2. **Concept Drift**: Ecommerce patterns may change post-credit offering
-3. **Segmentation Errors**: High-value shoppers ≠ good credit risks
-4. **Regulatory Scrutiny**: Proxy justification must withstand audit
+1. Clone the repository.
 
-**Mitigation Strategies**:
-- Conservative initial credit limits
-- Rapid feedback loops when real repayment data emerges
-- Regular model recalibration
-- Human oversight for edge cases
+2. Build and run the Docker container:
+   ```bash
+   docker build -t credit-scoring-api .
+   docker run -d -p 8000:8000 \
+     -v /path/to/models:/app/models \
+     -v /path/to/data:/app/data \
+     credit-scoring-api
+3.	Send a POST request to predict credit risk:
+4.	curl -X POST "http://localhost:8000/predict" \
+5.	     -H "Content-Type: application/json" \
+6.	     -d '{ "customer_id": "CustomerId_4683" }'
+________________________________________
+Technologies Used
+•	Python 3.11
+•	FastAPI
+•	Scikit-learn
+•	Pandas
+•	Docker
+•	GitHub Actions (CI/CD)
+•	Flake8 (Linting)
+•	Pytest (Testing)
+________________________________________
+Project Structure
+•	src/ — Source code for the API and feature engineering
+•	models/ — Serialized machine learning models
+•	data/ — Input data files used for prediction and training
+•	.github/workflows/ci.yml — GitHub Actions workflow file
+________________________________________
+Future Work
+•	Expand unit test coverage.
+•	Add logging and monitoring for API.
+•	Deploy the containerized API to cloud services.
+•	Improve feature engineering with domain-specific insights.
 
-## 3. Model Complexity Trade-offs
-
-| Consideration          | Simple Model (Logistic Regression + WoE) | Complex Model (Gradient Boosting) |
-|------------------------|------------------------------------------|-----------------------------------|
-| **Interpretability**   | High - Clear feature weights             | Medium - Requires SHAP/LIME       |
-| **Regulatory Approval**| Easier - Transparent calculations       | Harder - "Black box" concerns     |
-| **Predictive Power**   | Lower - Linear assumptions              | Higher - Captures interactions    |
-| **Implementation**     | Faster - Fewer hyperparameters          | Slower - Tuning intensive         |
-| **Maintenance**        | Easier - Stable behavior                | Harder - Potential instability    |
-
-**Recommended Approach**: Begin with interpretable models for initial regulatory approval while simultaneously developing complex models for comparison. Use model blending techniques if justified by significant performance improvements.
-
-**Key Decision Factors**:
-1. Regulatory environment strictness
-2. Availability of model validation resources
-3. Business risk appetite
-4. Technical debt considerations
